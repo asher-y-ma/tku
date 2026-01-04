@@ -1,0 +1,192 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// 从 Cookie 中检查授权状态
+const accessToken = Astro.cookies.get('tk_access_token')?.value;
+const openId = Astro.cookies.get('tk_open_id')?.value;
+
+if (!accessToken) {
+  return Astro.redirect('/');
+}
+
+// 模拟的发布历史数据
+const publishHistory = [
+  { id: 1, title: '我的精彩时刻 #TikTok', status: 'Published', date: '2026-01-03 14:20' },
+  { id: 2, title: '新年快乐！🎉', status: 'Published', date: '2026-01-01 09:15' },
+  { id: 3, title: '产品演示视频', status: 'Failed', date: '2025-12-30 18:45', error: 'Video too large' },
+];
+---
+
+<Layout title="Dashboard - TikTok Creator Manager">
+	<div class="max-w-7xl mx-auto px-6 md:px-12 py-12">
+		<header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
+			<div>
+				<h1 class="text-4xl font-black">Creator Dashboard</h1>
+				<p class="text-gray-500 mt-2">Connection Status: <span class="text-green-500 font-semibold">Authorized (ID: {openId?.substring(0, 8)}...)</span></p>
+			</div>
+			<div class="flex gap-4">
+				<a href="/api/auth" class="px-6 py-2 border border-gray-800 rounded-full text-sm font-bold hover:bg-gray-900 transition-colors">Re-authorize</a>
+			</div>
+		</header>
+
+		<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+			<!-- Upload Section -->
+			<div class="lg:col-span-2 space-y-8">
+				<section class="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-sm">
+					<h2 class="text-2xl font-bold mb-8 flex items-center gap-2">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-tiktok-primary"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+						Publish New Video
+					</h2>
+					
+					<form id="uploadForm" class="space-y-6">
+						<div class="space-y-2">
+							<label class="block text-sm font-bold text-gray-400">Select Video File (.mp4)</label>
+							<div id="dropZone" class="border-2 border-dashed border-gray-800 rounded-2xl p-8 flex flex-col items-center justify-center text-center hover:border-tiktok-primary transition-colors cursor-pointer bg-gray-950/50 group">
+								<input type="file" id="videoFile" name="video" accept=".mp4" class="hidden" required />
+								<div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mb-3 shadow-sm group-hover:scale-110 transition-transform">
+									<svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500 group-hover:text-tiktok-primary" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="12" y1="12" x2="12" y2="12"/></svg>
+								</div>
+								<p id="fileName" class="font-medium text-gray-300">Click or Drag & Drop</p>
+								<p class="text-xs text-gray-500 mt-1">Up to 1GB, .mp4 format</p>
+							</div>
+						</div>
+
+						<div class="space-y-2">
+							<label for="caption" class="block text-sm font-bold text-gray-400">Caption</label>
+							<textarea 
+								id="caption" 
+								name="caption" 
+								rows="4" 
+								maxlength="2000"
+								class="w-full px-4 py-3 rounded-xl border border-gray-800 bg-gray-950 text-white focus:border-tiktok-primary focus:ring-1 focus:ring-tiktok-primary outline-none transition-all resize-none"
+								placeholder="Write a catchy description for your video..."></textarea>
+							<div class="text-right text-xs text-gray-500" id="charCount">0 / 2000</div>
+						</div>
+
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div class="space-y-2">
+								<label for="privacy" class="block text-sm font-bold text-gray-400">Privacy Settings</label>
+								<select id="privacy" name="privacy" class="w-full px-4 py-3 rounded-xl border border-gray-800 bg-gray-950 text-white focus:border-tiktok-primary outline-none appearance-none cursor-pointer">
+									<option value="PUBLIC_TO_EVERYONE">Public</option>
+									<option value="MUTUAL_FOLLOW_FRIENDS">Friends</option>
+									<option value="SELF_ONLY">Self</option>
+								</select>
+							</div>
+						</div>
+
+						<button 
+							type="submit" 
+							id="submitBtn"
+							class="w-full py-4 bg-tiktok-primary text-white font-bold text-lg rounded-xl shadow-lg shadow-red-900/20 hover:brightness-110 transition-all flex items-center justify-center gap-2"
+						>
+							Publish to TikTok
+						</button>
+					</form>
+				</section>
+			</div>
+
+			<!-- History & Stats Section -->
+			<div class="space-y-8">
+				<section class="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-sm">
+					<h2 class="text-xl font-bold mb-6">Publish History</h2>
+					<div class="space-y-6">
+						{publishHistory.map(item => (
+							<div class="flex items-start gap-4 pb-6 border-b border-gray-800 last:border-0 last:pb-0">
+								<div class={`mt-1 w-2 h-2 rounded-full flex-shrink-0 ${item.status === 'Published' ? 'bg-green-400' : 'bg-red-400'}`}></div>
+								<div class="flex-grow min-w-0">
+									<h4 class="font-bold text-sm truncate text-gray-200">{item.title}</h4>
+									<p class="text-xs text-gray-500 mt-1">{item.date}</p>
+									{item.error && <p class="text-xs text-red-500 mt-1">{item.error}</p>}
+								</div>
+								<span class={`text-[10px] font-bold px-2 py-1 rounded uppercase ${item.status === 'Published' ? 'bg-green-900/30 text-green-400' : 'bg-red-900/30 text-red-400'}`}>
+									{item.status}
+								</span>
+							</div>
+						))}
+					</div>
+				</section>
+
+				<section class="bg-white text-black rounded-3xl p-8">
+					<h3 class="font-bold mb-2">Safety Tip</h3>
+					<p class="text-sm text-gray-600 leading-relaxed">
+						All video uploads are sent directly to TikTok servers. We do not store your video files.
+					</p>
+				</section>
+			</div>
+		</div>
+	</div>
+
+	<!-- Loading Overlay -->
+	<div id="loadingOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] hidden flex-col items-center justify-center text-white">
+		<div class="w-12 h-12 border-4 border-white border-t-tiktok-primary rounded-full animate-spin mb-4"></div>
+		<p class="font-bold text-xl" id="loadingText">视频发布中...</p>
+		<p class="text-sm opacity-70 mt-2">请勿关闭页面，这可能需要几分钟时间</p>
+	</div>
+</Layout>
+
+<script>
+	const uploadForm = document.getElementById('uploadForm') as HTMLFormElement;
+	const dropZone = document.getElementById('dropZone');
+	const videoInput = document.getElementById('videoFile') as HTMLInputElement;
+	const fileNameDisplay = document.getElementById('fileName');
+	const captionInput = document.getElementById('caption') as HTMLTextAreaElement;
+	const charCountDisplay = document.getElementById('charCount');
+	const loadingOverlay = document.getElementById('loadingOverlay');
+	const loadingText = document.getElementById('loadingText');
+
+	// 文件拖拽与选择
+	dropZone?.addEventListener('click', () => videoInput.click());
+	
+	videoInput?.addEventListener('change', () => {
+		if (videoInput.files?.length) {
+			const file = videoInput.files[0];
+			if (fileNameDisplay) fileNameDisplay.textContent = file.name;
+			dropZone?.classList.add('border-tiktok-primary', 'bg-red-50/30');
+		}
+	});
+
+	// 字数统计
+	captionInput?.addEventListener('input', () => {
+		if (charCountDisplay) charCountDisplay.textContent = `${captionInput.value.length} / 2000`;
+	});
+
+	// 表单提交
+	uploadForm?.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		
+		const formData = new FormData(uploadForm);
+		const file = videoInput.files?.[0];
+
+		if (!file) return alert('请选择视频文件');
+
+		loadingOverlay?.classList.remove('hidden');
+		loadingOverlay?.classList.add('flex');
+
+		try {
+			const response = await fetch('/api/publish', {
+				method: 'POST',
+				body: formData
+			});
+
+			const result = await response.json();
+
+			if (response.ok) {
+				alert('视频发布请求已发送！请在 TikTok App 中查看状态。');
+				location.reload();
+			} else {
+				if (response.status === 401) {
+					alert('授权已过期，请重新登录。');
+					location.href = '/api/auth';
+				} else {
+					alert(`发布失败: ${result.error || '未知错误'}`);
+				}
+			}
+		} catch (error) {
+			console.error('Upload error:', error);
+			alert('网络错误，请稍后重试。');
+		} finally {
+			loadingOverlay?.classList.add('hidden');
+			loadingOverlay?.classList.remove('flex');
+		}
+	});
+</script>

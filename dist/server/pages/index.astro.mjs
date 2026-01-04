@@ -1,0 +1,29 @@
+/* empty css                                     */
+import { f as createComponent, k as renderComponent, r as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_oNzcvkI7.mjs';
+import 'piccolore';
+import { $ as $$Layout } from '../chunks/Layout_JOumjzaS.mjs';
+export { renderers } from '../renderers.mjs';
+
+const $$Index = createComponent(($$result, $$props, $$slots) => {
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "TikTok Creator Manager - \u8F7B\u677E\u7BA1\u7406\u60A8\u7684\u521B\u4F5C\u5185\u5BB9" }, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<div class="relative overflow-hidden"> <!-- Background Decoration --> <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-red-500/10 to-transparent -z-10 opacity-30 blur-3xl"></div> <div class="max-w-7xl mx-auto px-6 md:px-12 pt-24 pb-32 flex flex-col items-center text-center"> <h1 class="text-5xl md:text-7xl font-black tracking-tight mb-8">
+Scale Your Creativity <br> <span class="text-tiktok-primary">Efficiently.</span> </h1> <p class="text-xl text-gray-400 max-w-2xl mb-12 leading-relaxed">
+TikTok Creator Manager helps creators manage video upload and distribution with simple one-click operations. 
+				We provide professional, secure, and efficient API integration solutions.
+</p> <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"> <a href="/api/auth" class="px-10 py-4 bg-tiktok-primary text-white font-bold text-lg rounded-full hover:brightness-110 transition-all shadow-lg shadow-red-900/20 flex items-center justify-center gap-3 group"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"> <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"></path> </svg>
+Connect TikTok Account
+</a> </div> <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 w-full"> <div class="p-8 bg-gray-900/50 backdrop-blur-sm rounded-3xl border border-gray-800 shadow-sm hover:border-gray-700 transition-all text-left"> <div class="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center mb-6"> <svg xmlns="http://www.w3.org/2000/svg" class="text-tiktok-primary" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg> </div> <h3 class="text-xl font-bold mb-3">One-click Upload</h3> <p class="text-gray-400">Quickly upload videos directly via API, eliminating tedious manual operations and improving publishing efficiency.</p> </div> <div class="p-8 bg-gray-900/50 backdrop-blur-sm rounded-3xl border border-gray-800 shadow-sm hover:border-gray-700 transition-all text-left"> <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6"> <svg xmlns="http://www.w3.org/2000/svg" class="text-blue-400" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> </div> <h3 class="text-xl font-bold mb-3">Secure & Compliant</h3> <p class="text-gray-400">Strictly adhere to TikTok Developer Policies, no storage of any private data, ensuring account security.</p> </div> <div class="p-8 bg-gray-900/50 backdrop-blur-sm rounded-3xl border border-gray-800 shadow-sm hover:border-gray-700 transition-all text-left"> <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-6"> <svg xmlns="http://www.w3.org/2000/svg" class="text-green-400" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg> </div> <h3 class="text-xl font-bold mb-3">Data Insights</h3> <p class="text-gray-400">View real-time upload status and feedback, providing transparent data support for your creations.</p> </div> </div> </div> </div> ` })}`;
+}, "D:/Projects/TKU/src/pages/index.astro", void 0);
+
+const $$file = "D:/Projects/TKU/src/pages/index.astro";
+const $$url = "";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+	__proto__: null,
+	default: $$Index,
+	file: $$file,
+	url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

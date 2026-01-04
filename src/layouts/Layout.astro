@@ -1,0 +1,62 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="TikTok Creator Manager" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="bg-gray-950 text-white font-sans min-h-screen flex flex-col">
+		<nav class="border-b border-gray-800 py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 bg-gray-950 z-50">
+			<a href="/" class="flex items-center gap-2">
+				<span class="text-2xl font-black tracking-tighter text-white">
+					TikTok <span class="text-tiktok-primary">Creator Manager</span>
+				</span>
+			</a>
+			<div class="hidden md:flex gap-6 font-semibold">
+				<a href="/" class="hover:text-tiktok-primary transition-colors">Home</a>
+				<a href="/privacy" class="hover:text-tiktok-primary transition-colors text-gray-300">Privacy Policy</a>
+				<a href="/terms" class="hover:text-tiktok-primary transition-colors text-gray-300">Terms of Service</a>
+			</div>
+		</nav>
+
+		<main class="flex-grow">
+			<slot />
+		</main>
+
+		<footer class="bg-gray-900 border-t border-gray-800 py-12 px-6 md:px-12">
+			<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+				<div class="text-gray-500 text-sm text-center md:text-left">
+					<p>&copy; 2026 TikTok Creator Manager. All rights reserved.</p>
+					<p class="mt-2">Deployed at tk.carlifestore.com</p>
+				</div>
+				<div class="flex gap-8 text-sm font-medium text-gray-400">
+					<a href="/privacy" class="hover:underline">Privacy Policy</a>
+					<a href="/terms" class="hover:underline">Terms of Service</a>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
+
+<style is:global>
+	@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+	
+	:root {
+		--tiktok-primary: #fe2c55;
+	}
+	
+	body {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+	}
+</style>

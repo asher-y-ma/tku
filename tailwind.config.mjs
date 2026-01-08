@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        tiktok: {
+        brand: {
           primary: '#fe2c55',
           secondary: '#25f4ee',
           black: '#121212',

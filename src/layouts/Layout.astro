@@ -10,7 +10,7 @@ const { title } = Astro.props;
 <html lang="zh-CN">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="TikTok Creator Manager" />
+		<meta name="description" content="Video Creator Manager" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
@@ -20,13 +20,13 @@ const { title } = Astro.props;
 		<nav class="border-b border-gray-800 py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 bg-gray-950 z-50">
 			<a href="/" class="flex items-center gap-2">
 				<span class="text-2xl font-black tracking-tighter text-white">
-					Video <span class="text-tiktok-primary">Creator Manager</span>
+					Video <span class="text-brand-primary">Creator Manager</span>
 				</span>
 			</a>
 			<div class="hidden md:flex gap-6 font-semibold">
-				<a href="/" class="hover:text-tiktok-primary transition-colors">Home</a>
-				<a href="/privacy" class="hover:text-tiktok-primary transition-colors text-gray-300">Privacy Policy</a>
-				<a href="/terms" class="hover:text-tiktok-primary transition-colors text-gray-300">Terms of Service</a>
+				<a href="/" class="hover:text-brand-primary transition-colors">Home</a>
+				<a href="/privacy" class="hover:text-brand-primary transition-colors text-gray-300">Privacy Policy</a>
+				<a href="/terms" class="hover:text-brand-primary transition-colors text-gray-300">Terms of Service</a>
 			</div>
 		</nav>
 
@@ -53,7 +53,7 @@ const { title } = Astro.props;
 	@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 	
 	:root {
-		--tiktok-primary: #fe2c55;
+		--brand-primary: #fe2c55;
 	}
 	
 	body {

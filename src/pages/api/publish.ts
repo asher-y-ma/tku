@@ -20,9 +20,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       return new Response(JSON.stringify({ error: 'No video file provided' }), { status: 400 });
     }
 
-    // 第一步：初始化发布任务
-    // 参考 TikTok V2 API: https://developers.tiktok.com/doc/content-post-api-v2-guide/
-    const initResponse = await fetch('https://open.tiktokapis.com/v2/post/publish/video/init/', {
+    // Step 1: Initialize publish task
+    const PUBLISH_INIT_ENDPOINT = 'https://open.tiktokapis.com/v2/post/publish/video/init/';
+    const initResponse = await fetch(PUBLISH_INIT_ENDPOINT, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
@@ -40,7 +40,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         source_info: {
           source: 'FILE_UPLOAD',
           video_size: videoFile.size,
-          chunk_size: videoFile.size, // 简化处理，假设一次性上传（TikTok 建议 5MB - 64MB 的分片，这里假设视频不大）
+          chunk_size: videoFile.size, // Assuming single chunk upload for simplicity
           total_chunk_count: 1
         }
       })

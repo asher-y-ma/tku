@@ -7,7 +7,7 @@ export const GET: APIRoute = async ({ request, redirect, cookies }) => {
   const error = url.searchParams.get('error');
 
   if (error) {
-    return new Response(`TikTok Auth Error: ${error}`, { status: 400 });
+    return new Response(`Platform Auth Error: ${error}`, { status: 400 });
   }
 
   if (!code) {
@@ -19,8 +19,9 @@ export const GET: APIRoute = async ({ request, redirect, cookies }) => {
   const redirectUri = import.meta.env.REDIRECT_URI || 'https://tk.carlifestore.com/api/callback';
 
   try {
-    // 交换 Token
-    const tokenResponse = await fetch('https://open.tiktokapis.com/v2/oauth/token/', {
+    // Exchange Token
+    const TOKEN_ENDPOINT = 'https://open.tiktokapis.com/v2/oauth/token/';
+    const tokenResponse = await fetch(TOKEN_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -38,7 +39,7 @@ export const GET: APIRoute = async ({ request, redirect, cookies }) => {
     const data = await tokenResponse.json();
 
     if (!tokenResponse.ok) {
-      console.error('TikTok Token Exchange Error:', data);
+      console.error('Token Exchange Error:', data);
       return new Response(`Failed to exchange token: ${JSON.stringify(data)}`, { status: 500 });
     }
 
@@ -78,6 +79,6 @@ export const GET: APIRoute = async ({ request, redirect, cookies }) => {
     return redirect('/dashboard');
   } catch (err) {
     console.error('Callback error:', err);
-    return new Response('Internal Server Error during TikTok callback', { status: 500 });
+    return new Response('Internal Server Error during callback', { status: 500 });
   }
 };
